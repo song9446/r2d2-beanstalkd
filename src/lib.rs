@@ -2,7 +2,7 @@
 pub extern crate r2d2;
 pub extern crate beanstalkd;
 
-use beanstalkd::error::BeanstalkdError as Error;
+pub use beanstalkd::error::BeanstalkdError as Error;
 use beanstalkd::Beanstalkd as Client;
 
 /// An `r2d2::ConnectionManager` for `redis::Client`s.
@@ -42,6 +42,7 @@ use beanstalkd::Beanstalkd as Client;
 ///     }
 /// }
 /// ```
+///
 #[derive(Debug)]
 pub struct BeanstalkdConnectionManager {
     host: String, 
