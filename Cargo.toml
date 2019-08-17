@@ -1,0 +1,16 @@
+[package]
+name = "r2d2_beanstalkd"
+version = "0.1.0"
+authors = [
+    "Eunchul Song <eunchul.dev@gmail.com>",
+]
+license = "MIT"
+description = "Beanstalkd support for the r2d2 connection pool"
+repository = "https://github.com/song9446/r2d2-beanstalkd"
+#documentation = "https://docs.rs/r2d2_redis/0.10.1"
+keywords = ["beanstalkd", "pool", "message queue", "job queue"]
+include = ["src/**/*", "LICENSE", "Cargo.toml"]
+
+[dependencies]
+r2d2 = "0.8"
+beanstalkd = { git = "https://github.com/song9446/rust-beanstalkd" }
