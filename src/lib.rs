@@ -1,9 +1,9 @@
 
 pub extern crate r2d2;
-pub extern crate beanstalkd;
+pub extern crate beanstalkc;
 
-pub use beanstalkd::error::BeanstalkdError as Error;
-use beanstalkd::Beanstalkd as Client;
+pub use beanstalkc::BeanstalkcError as Error;
+pub use beanstalkc::Beanstalkc as Client;
 
 /// An `r2d2::ConnectionManager` for `redis::Client`s.
 ///
@@ -64,7 +64,7 @@ impl r2d2::ManageConnection for BeanstalkdConnectionManager {
     type Error = Error;
 
     fn connect(&self) -> Result<Client, Error> {
-        Client::connect(&self.host, self.port)
+		Client::new().host(&self.host).port(self.port).connect()
     }
 
     fn is_valid(&self, conn: &mut Client) -> Result<(), Error> {

@@ -1,6 +1,6 @@
 [package]
 name = "r2d2_beanstalkd"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
     "Eunchul Song <eunchul.dev@gmail.com>",
 ]
@@ -13,4 +13,5 @@ include = ["src/**/*", "LICENSE", "Cargo.toml"]
 
 [dependencies]
 r2d2 = "0.8"
-beanstalkd = { git = "https://github.com/song9446/rust-beanstalkd" }
+beanstalkc = { git = "https://github.com/song9446/beanstalkc-rust" }
+# beanstalkc = { path = "../beanstalkc-rust" }
