@@ -46,7 +46,8 @@ pub use beanstalkc::Beanstalkc as Client;
 #[derive(Debug)]
 pub struct BeanstalkdConnectionManager {
     host: String, 
-    port: u16
+    port: u16,
+    watch_list: Vec<String>,
 }
 
 impl BeanstalkdConnectionManager {
@@ -54,8 +55,8 @@ impl BeanstalkdConnectionManager {
     ///
     /// See `redis::Client::open` for a description of the parameter
     /// types.
-    pub fn new(host: String, port: u16) -> BeanstalkdConnectionManager {
-        BeanstalkdConnectionManager { host, port }
+    pub fn new(host: String, port: u16, watch_list: Vec<String>) -> BeanstalkdConnectionManager {
+        BeanstalkdConnectionManager { host, port, watch_list }
     }
 }
 
@@ -64,7 +65,11 @@ impl r2d2::ManageConnection for BeanstalkdConnectionManager {
     type Error = Error;
 
     fn connect(&self) -> Result<Client, Error> {
-		Client::new().host(&self.host).port(self.port).connect()
+		let mut conn = Client::new().host(&self.host).port(self.port).connect()?;
+        for tube in &self.watch_list {
+            conn.watch(&tube)?;
+        }
+        Ok(conn)
     }
 
     fn is_valid(&self, conn: &mut Client) -> Result<(), Error> {
